@@ -14,14 +14,16 @@ Instead of making long if/else statements verifyr allows you to do complex state
 Example
 ```js
 var data = new Verify("i dont use chain statements ;(")
-console.log(data.has(";(") && data.length(5,-1) && data.is("string"))
+console.log(data.has(";(").v() &&
+            data.length(5,-1).v() &&
+            data.is("string").v())
 ```
 
 Can be turned into
 
 ```js
 var data = new Verify("i use awesome chain statements");
-console.log(data.has(":)").length(5,-1).is("string"));
+console.log(data.has(":)").length(5,-1).is("string").v());
 ```
 
 # Properties
@@ -31,14 +33,18 @@ boolean of weather the statement is valid or not
 
 # Methods
 
+### V/Valid
+
+call .v() or .valid() on a Verify function to return a boolean that shows if the statement is valid
+
 ### Length
 called on a verifyr object and takes two paramaters min + max length, if either of these varables are -1 it will be infinate in that direction
 
 Example
 ```js
-new Verify("test").length(0,4)
+new Verify("test").length(0,4).v()
 // true
-new Verify("test").length(2,3)
+new Verify("test").length(2,3).v()
 // false
 ```
 
@@ -47,7 +53,7 @@ sees if type of object is same as parameter
 
 Example
 ```js
-new Verify("test").is("string")
+new Verify("test").is("string").v()
 //true
 ```
 
@@ -56,7 +62,7 @@ sees if type of object is diffrent than parameter
 
 Example
 ```js
-new Verify([a,2]).isnt("string")
+new Verify([a,2]).isnt("string").v()
 //true
 ```
 
@@ -65,7 +71,7 @@ sees if string/array includes provided parameter
 
 Example
 ```js
-new Verify(Verifyr is amazing).has("verifyr")
+new Verify(Verifyr is amazing).has("verifyr").v()
 //true
 ```
 
@@ -74,7 +80,7 @@ returns if data is equal to parameter
 
 Example
 ```js
-new Verify("test").equals("test")
+new Verify("test").equals("test").v()
 //true
 ```
 
@@ -83,7 +89,7 @@ Allows you to evaluate a statement that returns a boolean on the data where x is
 
 Example
 ```js
-new Verify("test").newData("new data!").has("new")
+new Verify("test").newData("new data!").has("new").v()
 //true
 ```
 
@@ -94,7 +100,7 @@ Run a function for each item with the item as paramaters, function must return a
 
 Example
 ```js
-new Verify(["1","1"]).each(x => x == "1") //makes sure each item is "1"
+new Verify(["1","1"]).each(x => x == "1").v() //makes sure each item is "1"
 //true
 ```
 
@@ -105,7 +111,7 @@ sees if the object has a child with a specific name
 
 Example
 ```js
-new Verify({x:1,y:2}).hasChild("x")
+new Verify({x:1,y:2}).hasChild("x").v()
 //true
 ```
 
@@ -114,7 +120,10 @@ goes to child + sets current data to child
 
 Example
 ```js
-new Verify({x:"string 1",y:"string 2"}).child("x").is("string")
+new Verify({x:"string 1",y:"string 2"})
+    .child("x")
+    .is("string")
+    .v()
 //true
 ```
 
@@ -129,5 +138,6 @@ new Verify({x:"string 1",y:false})
     .parent()
     .child("y")
     .is("boolean")
+    .v()
 //true
 ```
