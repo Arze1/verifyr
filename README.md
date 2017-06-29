@@ -1,9 +1,9 @@
 # Verifyr
 
-### Verify data in an object like syntax
+### Verify data in an chain like syntax
 
 ```js
-const Verify = require(verifyr);
+const Verify = require("verifyr");
 
 new Verify("verifyr is the best!!!").has("verifyr").isnt("object");
 ```
@@ -14,7 +14,7 @@ Instead of making long if/else statements verifyr allows you to do complex state
 Example
 ```js
 var data = new Verify("i dont use chain statements ;(")
-console.log(data.has(";(") && data.length(5, -1) && data.is("string"))
+console.log(data.has(";(") && data.length(5,-1) && data.is("string"))
 ```
 
 Can be turned into
@@ -85,11 +85,11 @@ new Verify("test").newData("new data!").has("new")
 # Array specific functions
 
 ### Each
-Run an eval that returns a boolean on each item in the array where x is equal to the item
+Run a function for each item with the item as paramaters, function must return a bool
 
 Example
 ```js
-new Verify(["1","1"]).each("x == '1'") //makes sure each item is "1"
+new Verify(["1","1"]).each(x => x == "1") //makes sure each item is "1"
 //true
 ```
 

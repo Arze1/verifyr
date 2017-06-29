@@ -1,7 +1,7 @@
 {
   "name": "verifyr",
-  "version": "1.0.2",
-  "description": "Verify strings in a easy to use chain syntax",
+  "version": "1.1.1",
+  "description": "Verify node.js data in a easy to use chain syntax, supports arrays, objects and strings",
   "main": "index.js",
   "scripts": {
     "test": "echo Error: no test specified && exit 1"
