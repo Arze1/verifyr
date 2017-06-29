@@ -131,7 +131,7 @@ class _Array extends Main {
 
 const init = function(data) {
     if(typeof(data) === "object") {
-        if(Object.prototype.toString.call(data) === '[object Array]') return new _Array(data);
+        if(data.constructor === Array) return new _Array(data);
         else return new _Object(data);
     } else return new _String(data);
 };
