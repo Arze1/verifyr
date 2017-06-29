@@ -1,6 +1,6 @@
 {
   "name": "verifyr",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Verify strings in a easy to use chain syntax",
   "main": "index.js",
   "scripts": {

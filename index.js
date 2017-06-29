@@ -28,7 +28,7 @@ class Main {
 
         if (!this) return false;
 
-        if(typeof(this.s) === type) return this;
+        if(this.type === type) return this;
         else return false;
     }
 
@@ -36,7 +36,7 @@ class Main {
 
         if (!this) return false;
 
-        if(typeof(this.s) !== type) return this;
+        if(this.type !== type) return this;
         else return false;
     }
 
@@ -52,12 +52,10 @@ class Main {
         } else return false;
     }
 
-    eval(statement) {
-        if(!this) return false;
+    newData(data) {
+        if (!this) return false;
 
-        var x = this.s;
-        if(eval(statement)) return this;
-        else return false;
+        return new init(data);
     }
 }
 
@@ -109,6 +107,14 @@ class _Array extends Main {
             if(!eval(statement)) return false;
         }
         return this;
+    }
+
+    has(str) {
+
+        if (!this) return false;
+
+        if(this.s.indexOf(str) > -1) return this;
+        else return false;
     }
 }
 
