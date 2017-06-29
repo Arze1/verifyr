@@ -24,6 +24,11 @@ var data = new Verify("i use awesome chain statements");
 console.log(data.has(":)").length(5,-1).is("string"));
 ```
 
+# Properties
+
+### isValid
+boolean of weather the statement is valid or not
+
 # Methods
 
 ### Length
