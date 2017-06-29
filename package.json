@@ -1,0 +1,38 @@
+{
+  "name": "verifyr",
+  "version": "1.0.0",
+  "description": "Verify strings in a easy to use chain syntax",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo Error: no test specified && exit 1"
+  },
+  "author": "arze1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arze1/verifyr.git"
+  },
+  "keywords": [
+    "verifyr",
+    "js",
+    "verify",
+    "node.js",
+    "strings",
+    "objects",
+    "arrays",
+    "easy",
+    "chain",
+    "syntax",
+    "npm",
+    "length",
+    "includes",
+    "typeof",
+    "type",
+    "is",
+    "isnt"
+  ],
+  "bugs": {
+    "url": "https://github.com/Arze1/verifyr/issues"
+  },
+  "homepage": "https://github.com/Arze1/verifyr#readme"
+}
