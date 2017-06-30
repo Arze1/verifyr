@@ -120,9 +120,7 @@ class _Object extends Main {
 
         if(this.s[data] || this.s[data] === false) {
 
-            console.log(this.s);
             this.s = this.s[data];
-            console.log(this.s);
 
             this.path.push(data);
 
