@@ -45,11 +45,14 @@ if false/left out the save will return the whole Verify class for that object th
 Example
 ```js
 var save = new Verify().is("string").isnt("number").save();
+//can call extra functions on this
 
-console.log(save.test("I am a string").isnt("object").v()); //can call extra functions on this
+console.log(save.test("I am a string").isnt("object").v()); 
+
 //true
 
-var save2 = new Verify().is("string").isnt("number").save(true); //cant call extra functions on this
+var save2 = new Verify().is("string").isnt("number").save(true); 
+//cant call extra functions on this
 
 console.log(save.test("I am a string"));
 //true
