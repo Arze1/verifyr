@@ -1,11 +1,15 @@
 class Main {
     constructor(data) {
+
         this.s = data;
+
         this.isValid = true;
+
         if(typeof(data) === "object") {
             this.p = data;
             this.path = [];
         }
+
         this.type = typeof(data);
     }
 
@@ -15,6 +19,7 @@ class Main {
 
         if(this.s === str) return this;
         else this.isValid = false;
+
         return this;
     }
 
@@ -24,6 +29,7 @@ class Main {
 
         if(this.s !== str) return this;
         else this.isValid = false;
+
         return this;
     }
 
@@ -33,6 +39,7 @@ class Main {
 
         if(this.type === type) return this;
         else this.isValid = false;
+
         return this;
     }
 
@@ -42,6 +49,7 @@ class Main {
 
         if(this.type !== type) return this;
         else this.isValid = false;
+
         return this;
     }
 
@@ -55,6 +63,7 @@ class Main {
             (b === -1 ? true : _len <= b)) {
             return this
         } else this.isValid = false;
+
         return this;
     }
 
@@ -78,9 +87,18 @@ class _String extends Main {
         if (!this.isValid) return this;
 
         if(this.s.indexOf(str) > -1) return this;
+
         else this.isValid = false;
+
         return this;
     }
+}
+
+function getType(data) {
+    if(typeof(data) === "object") {
+        if(data.constructor === Array) return "array";
+        else return "object";
+    } else return "string";
 }
 
 class _Object extends Main {
@@ -97,8 +115,13 @@ class _Object extends Main {
         if (!this.isValid) return this;
 
         if(this.s[data]) {
+
             this.s = this.s[data];
+
             this.path.push(data);
+
+            this.type = getType(this.s);
+
         } else this.isValid = false;
         return this;
     }
@@ -107,9 +130,14 @@ class _Object extends Main {
         if (!this.isValid) return this;
 
         if(this.path.length > 0) {
+
             this.path.splice(this.path.length,1);
+
             if(this.path.length === 1) this.s = this.p;
             else this.s = eval(`this.p.${this.path.join(".")}`);
+
+            this.type = getType(this.s);
+
             return this;
         } else this.isValid = false;
         return this;
@@ -132,6 +160,7 @@ class _Array extends Main {
 
         if(this.s.indexOf(str) > -1) return this;
         else this.isValid = false;
+
         return this;
     }
 }
