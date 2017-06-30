@@ -38,6 +38,26 @@ used with the `.is()`/`.isnt()` functions or by getting the property .type
 
 # Methods
 
+### Save
+takes one optional paramater, if this paramater is true the save will return the `.v()` response of the save
+if false/left out the save will return the whole Verify class for that object that you can call more functions on
+
+Example
+```js
+var save = new Verify().is("string").isnt("number").save();
+
+console.log(save.test("I am a string").isnt("object").v()); //can call extra functions on this
+//true
+
+var save2 = new Verify().is("string").isnt("number").save(true); //cant call extra functions on this
+
+console.log(save.test("I am a string"));
+//true
+```
+
+When creating a template for `.save()` make sure to specify the [type](#types) if you would like type specific functions like `new Verify("object")`
+
+
 ### V/Valid
 
 call .v() or .valid() on a Verify function to return a boolean that shows if the statement is valid
@@ -90,15 +110,6 @@ returns if data is equal to parameter
 Example
 ```js
 new Verify("test").equals("test").v()
-//true
-```
-
-### New Data
-Allows you to evaluate a statement that returns a boolean on the data where x is equal to the string
-
-Example
-```js
-new Verify("test").newData("new data!").has("new").v()
 //true
 ```
 

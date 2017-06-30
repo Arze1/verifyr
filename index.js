@@ -9,10 +9,40 @@ function getType(data) {
     }
 }
 
+class Save {
+
+    constructor() {
+        this.save = {methods:[]};
+        this.returnValue = false;
+    }
+
+    test(string) {
+
+        if(!string && string !== false) return false;
+        console.log(string)
+        let tmp = init(string);
+
+        for(var x of this.save.methods) {
+            tmp[x[0]](x[1][0],x[1][1],x[1][2])
+        }
+        return (this.returnValue ? tmp.v() : tmp);
+    }
+
+    setReturn(val) {
+        this.returnValue = val;
+    }
+
+    add(data) {
+        this.save.methods.push(data)
+    }
+}
+
 class Main {
     constructor(data) {
 
         this.s = data; // current data in object
+
+        this.tmpsave  = new Save();
 
         this.isValid = true;
 
@@ -25,7 +55,7 @@ class Main {
     }
 
     equals(str) {
-
+       this.tmpsave.add(["equals", [str]]);
         if (!this.isValid) return this;
 
         if(this.s === str) return this;
@@ -35,6 +65,8 @@ class Main {
     }
 
     inequal(str) {
+
+       this.tmpsave.add(["inequal", [str]]);
 
         if (!this.isValid) return this;
 
@@ -46,6 +78,8 @@ class Main {
 
     is(type) {
 
+       this.tmpsave.add(["is", [type]]);
+
         if (!this.isValid) return this;
 
         if(this.type === type) return this;
@@ -55,6 +89,8 @@ class Main {
     }
 
     isnt(type) {
+
+       this.tmpsave.add(["isnt", [type]]);
 
         if (!this.isValid) return this;
 
@@ -66,11 +102,13 @@ class Main {
 
     length(a,b) {
 
+       this.tmpsave.add(["length", [a, b]]);
+
         if (!this.isValid) return this;
 
         let _len = this.s.length;
 
-        if((a === -1 ? true : _len >= a) &&
+        if ((a === -1 ? true : _len >= a) &&
             (b === -1 ? true : _len <= b)) {
             return this
         } else this.isValid = false;
@@ -78,10 +116,9 @@ class Main {
         return this;
     }
 
-    newData(data) {
-        if (!this.isValid) return this;
-
-        return new init(data);
+    save(returnV = false) {
+        this.tmpsave.setReturn(returnV);
+        return this.tmpsave;
     }
 
     valid() {
@@ -94,6 +131,8 @@ class Main {
 
 class _String extends Main {
     has(str) {
+
+       this.tmpsave.add(["has", [str]]);
 
         if (!this.isValid) return this;
 
@@ -108,6 +147,9 @@ class _String extends Main {
 class _Object extends Main {
 
     hasChild(child) {
+
+       this.tmpsave.add(["hasChild", [child]]);
+
         if (!this.isValid) return this;
 
         if(!this.s[data]) return false;
@@ -116,6 +158,9 @@ class _Object extends Main {
     }
 
     child(data) {
+
+       this.tmpsave.add(["child", [data]]);
+
         if (!this.isValid) return this;
 
         if(this.s[data] || this.s[data] === false) {
@@ -131,6 +176,9 @@ class _Object extends Main {
     }
 
     parent() {
+
+       this.tmpsave.add(["parent", []]);
+
         if (!this.isValid) return this;
 
         if(this.path.length > 0) {
@@ -164,6 +212,9 @@ class _Object extends Main {
 
 class _Array extends Main {
     each(statement) {
+
+       this.save.add(["each", [statement]]);
+
         if (!this.isValid) return this;
 
         for(var x of this.s) {
@@ -173,6 +224,8 @@ class _Array extends Main {
     }
 
     has(str) {
+
+       this.save.add(["has", [str]]);
 
         if (!this.isValid) return this;
 
@@ -184,6 +237,19 @@ class _Array extends Main {
 }
 
 const init = function(data) {
+    switch(data) {
+        case "object":
+            return new _Object();
+            break;
+        case "string":
+            return new _String();
+            break;
+        case "array":
+            return new _Array();
+            break;
+    }
+    if(!data && data !== false) return new Main();
+
     if(typeof(data) === "object") {
         if(data.constructor === Array) return new _Array(data);
         else return new _Object(data);
