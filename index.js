@@ -1,7 +1,18 @@
+function getType(data) {
+    if(typeof(data) === "object") {
+        if(data.constructor === Array) return "array";
+        else return "object";
+    } else if(typeof(data) === "number") return "number";
+    else {
+        if(typeof(data) === "boolean") return "bool";
+        else return "string";
+    }
+}
+
 class Main {
     constructor(data) {
 
-        this.s = data;
+        this.s = data; // current data in object
 
         this.isValid = true;
 
@@ -10,7 +21,7 @@ class Main {
             this.path = [];
         }
 
-        this.type = typeof(data);
+        this.type = getType(data);
     }
 
     equals(str) {
@@ -94,13 +105,6 @@ class _String extends Main {
     }
 }
 
-function getType(data) {
-    if(typeof(data) === "object") {
-        if(data.constructor === Array) return "array";
-        else return "object";
-    } else return "string";
-}
-
 class _Object extends Main {
 
     hasChild(child) {
@@ -114,9 +118,11 @@ class _Object extends Main {
     child(data) {
         if (!this.isValid) return this;
 
-        if(this.s[data]) {
+        if(this.s[data] || this.s[data] === false) {
 
+            console.log(this.s);
             this.s = this.s[data];
+            console.log(this.s);
 
             this.path.push(data);
 
@@ -134,7 +140,21 @@ class _Object extends Main {
             this.path.splice(this.path.length,1);
 
             if(this.path.length === 1) this.s = this.p;
-            else this.s = eval(`this.p.${this.path.join(".")}`);
+            else {
+                const path = this.path;
+
+                let tempObj = this.p;
+
+                for(let i = 0; i < path.length; i++) {
+                    if(tempObj[path[i]]) tempObj = tempObj[path[i]];
+                    else {
+                        this.isValid = false;
+                    }
+                }
+
+
+                this.s = tempObj;
+            }
 
             this.type = getType(this.s);
 
