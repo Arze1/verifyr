@@ -1,4 +1,4 @@
-class Main {
+class Verifyr {
     constructor(data) {
 
         this.s = data;
@@ -15,40 +15,52 @@ class Main {
 
     equals(str) {
 
-        if (!this.isValid) return this;
+        if (!this.isValid) 
+            return this;
 
-        if(this.s === str) return this;
-        else this.isValid = false;
+        if(this.s === str) 
+            return this;
+        
+        this.isValid = false;
 
         return this;
     }
 
     inequal(str) {
 
-        if (!this.isValid) return this;
+        if (!this.isValid) 
+            return this;
 
-        if(this.s !== str) return this;
-        else this.isValid = false;
+        if(this.s !== str) 
+            return this;
+        
+        this.isValid = false;
 
         return this;
     }
 
     is(type) {
 
-        if (!this.isValid) return this;
+        if (!this.isValid) 
+            return this;
 
-        if(this.type === type) return this;
-        else this.isValid = false;
+        if(this.type === type) 
+            return this;
+        
+        this.isValid = false;
 
         return this;
     }
 
     isnt(type) {
 
-        if (!this.isValid) return this;
+        if (!this.isValid) 
+            return this;
 
-        if(this.type !== type) return this;
-        else this.isValid = false;
+        if(this.type !== type) 
+            return this;
+        
+        this.isValid = false;
 
         return this;
     }
@@ -68,7 +80,8 @@ class Main {
     }
 
     newData(data) {
-        if (!this.isValid) return this;
+        if (!this.isValid) 
+            return this;
 
         return new init(data);
     }
@@ -81,38 +94,36 @@ class Main {
     }
 }
 
-class _String extends Main {
+class _String extends Verifyr {
     has(str) {
 
-        if (!this.isValid) return this;
+        if (!this.isValid) 
+            return this;
 
-        if(this.s.indexOf(str) > -1) return this;
+        if(this.s.indexOf(str) > -1) 
+            return this;
 
-        else this.isValid = false;
+        this.isValid = false;
 
         return this;
     }
 }
 
-function getType(data) {
-    if(typeof(data) === "object") {
-        if(data.constructor === Array) return "array";
-        else return "object";
-    } else return "string";
-}
-
-class _Object extends Main {
+class _Object extends Verifyr {
 
     hasChild(child) {
-        if (!this.isValid) return this;
+        if (!this.isValid) 
+            return this;
 
-        if(!this.s[data]) return false;
+        if(!this.s[data]) 
+            return false;
 
         return this;
     }
 
     child(data) {
-        if (!this.isValid) return this;
+        if (!this.isValid) 
+            return this;
 
         if(this.s[data]) {
 
@@ -122,54 +133,75 @@ class _Object extends Main {
 
             this.type = getType(this.s);
 
-        } else this.isValid = false;
+        }
+        
+        this.isValid = false;
+        
         return this;
     }
 
     parent() {
-        if (!this.isValid) return this;
+        if (!this.isValid) 
+            return this;
 
         if(this.path.length > 0) {
 
             this.path.splice(this.path.length,1);
 
-            if(this.path.length === 1) this.s = this.p;
-            else this.s = eval(`this.p.${this.path.join(".")}`);
+            if(this.path.length === 1) 
+                this.s = this.p;
+            else this.s = eval(`this.p.${this.path.join(".")}`); // Potential security flaw, need to fix it
 
             this.type = getType(this.s);
 
             return this;
-        } else this.isValid = false;
+        } 
+        
+        this.isValid = false;
+        
         return this;
     }
 }
 
-class _Array extends Main {
+class _Array extends Verifyr {
     each(statement) {
-        if (!this.isValid) return this;
+        if (!this.isValid) 
+            return this;
 
         for(var x of this.s) {
-            if(!statement(x)) this.isValid = false;
+            if(!statement(x)) 
+                this.isValid = false;
         }
+        
         return this;
     }
 
     has(str) {
 
-        if (!this.isValid) return this;
+        if (!this.isValid) 
+            return this;
 
-        if(this.s.indexOf(str) > -1) return this;
-        else this.isValid = false;
+        if(!this.s.indexOf(str) > -1)
+            this.isValid = false;
 
         return this;
     }
 }
 
-const init = function(data) {
+function getType(data) {
+    // If input is an object, check constructor to see if its an array 'object'
     if(typeof(data) === "object") {
-        if(data.constructor === Array) return new _Array(data);
-        else return new _Object(data);
-    } else return new _String(data);
-};
+        if(data.constructor === Array) 
+            return "array";        
+        return "object";
+    }
+    
+    return "string";
+}
+
+// Determines appropriate class based on input type for initialisation
+function init(input) {
+    return {'array': _Array, 'object': _Object, 'string': _String}[input];
+}
 
 module.exports = init;
