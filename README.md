@@ -26,6 +26,16 @@ var data = new Verify("i use awesome chain statements");
 console.log(data.has(":)").length(5,-1).is("string").v());
 ```
 
+# Valid Types
+
+used with the `.is()`/`.isnt()` functions or by getting the property .type
+
+ - `bool` any boolean (true/false)
+ - `number` any number
+ - `string` any string
+ - `array` any array
+ - `object` any JSON/Pure javascript object
+
 # Methods
 
 ### V/Valid
@@ -46,6 +56,8 @@ new Verify("test").length(2,3).v()
 ### Is
 sees if type of object is same as parameter
 
+view valid types [here](#types)
+
 Example
 ```js
 new Verify("test").is("string").v()
@@ -54,6 +66,8 @@ new Verify("test").is("string").v()
 
 ### Isnt
 sees if type of object is diffrent than parameter
+
+view valid types [here](#types)
 
 Example
 ```js
