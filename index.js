@@ -37,6 +37,11 @@ class Save {
     }
 }
 
+const typeRegex = {
+    email: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    phone: /^\(*\+*[1-9]{0,3}\)*-*[1-9]{0,3}[-. /]*\(*[2-9]\d{2}\)*[-. /]*\d{3}[-. /]*\d{4} *e*x*t*\.* *\d{0,4}$/
+};
+
 class Main {
     constructor(data) {
 
@@ -80,7 +85,15 @@ class Main {
 
        this.tmpsave.add(["is", [type]]);
 
-        if (!this.isValid) return this;
+		if (!this.isValid) return this;
+
+       if(typeRegex[type]) {
+		   if (typeRegex[type].test(this.s)) return this;
+		   else {
+		       this.isValid = false;
+		       return this;
+           }
+       }
 
         if(this.type === type) return this;
         else this.isValid = false;
@@ -93,6 +106,13 @@ class Main {
        this.tmpsave.add(["isnt", [type]]);
 
         if (!this.isValid) return this;
+
+		if(typeRegex[type]) {
+			if (typeRegex[type].test(this.s)) {
+				this.isValid = false;
+				return this;
+			} else return this;
+		}
 
         if(this.type !== type) return this;
         else this.isValid = false;

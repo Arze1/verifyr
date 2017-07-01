@@ -36,6 +36,11 @@ used with the `.is()`/`.isnt()` functions or by getting the property .type
  - `array` any array
  - `object` any JSON/Pure javascript object
 
+ ### Types only supported using `.is()`/`.isnt()`
+
+ - `phone` a valid phone number format (CANNOT VERIFY NUMBER IS IN USE)
+ - `email` a valid email format (CANNOT VERIFY EMAIL EXISTS)
+
 # Methods
 
 ### Save
