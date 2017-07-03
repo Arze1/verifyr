@@ -172,7 +172,7 @@ class _Object extends Main {
 
 		if (!this.isValid) return this;
 
-		if(!this.s[child]) return false;
+		if(!this.s[child]) this.isValid = false;
 
 		return this;
 	}
